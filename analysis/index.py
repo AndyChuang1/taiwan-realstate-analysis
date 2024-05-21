@@ -23,7 +23,7 @@ location_str = """台北市 A 苗栗縣 K 花蓮縣 U
 基隆市 C 南投縣 M 澎湖縣 X
 台南市 D 彰化縣 N 陽明山 Y
 高雄市 E 雲林縣 P 金門縣 W
-台北縣 F 嘉義縣 Q 連江縣 Zㄗㄣ
+新北市 F 嘉義縣 Q 連江縣 Z
 宜蘭縣 G 台南縣 R 嘉義市 I
 桃園縣 H 高雄縣 S 新竹市 O
 新竹縣 J 屏東縣 T"""
@@ -38,12 +38,12 @@ locToLetter = dict(
 
 
 # 歷年資料夾
-dirs = [d for d in os.listdir('crawler/real_estate/') if not d.startswith('.DS')
+dirs = [d for d in os.listdir('real_estate/') if not d.startswith('.DS')
         if int(d[:3]) >= fromYear and int(d[:3]) <= toYear]
 dfs = []
 for d in dirs:
     df = pd.read_csv(os.path.join(
-        'crawler/real_estate/'+d, locToLetter[location] + '_lvr_land_a.csv'), index_col=False)
+        'real_estate/'+d, locToLetter[location] + '_lvr_land_a.csv'), index_col=False)
     df['Q'] = d[-1]
     dfs.append(df.iloc[1:])
 

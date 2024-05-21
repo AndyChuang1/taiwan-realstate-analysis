@@ -165,3 +165,4 @@ crawler/*.zip
 crawler/real_estate/** 
 .DS_Store
 *.csv
+real_estate

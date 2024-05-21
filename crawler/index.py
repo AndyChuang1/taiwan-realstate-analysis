@@ -4,6 +4,8 @@ import zipfile
 import time
 import argparse
 
+
+# 解析指令 
 parser = argparse.ArgumentParser(description='Description of your program')
 parser.add_argument(
     '-f', '--yearsfrom', help='from year, example"110', type=int, default=111)
@@ -37,7 +39,7 @@ def real_estate_crawler(year, season):
     with zipfile.ZipFile(fname, 'r') as zip_ref:
         zip_ref.extractall(folder)
 
-    time.sleep(5)
+    time.sleep(1)
 
 
 fromYear = args.yearsfrom
