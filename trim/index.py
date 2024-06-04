@@ -60,7 +60,7 @@ df['單價元坪'] = df['單價元平方公尺'] * 3.30579
 df['建物型態2'] = df['建物型態'].str.split('(').str[0]
 
 # # 刪除有備註之交易（多為親友交易、價格不正常之交易）
-# df = df[df['備註'].isnull()]
+df = df[df['備註'].isnull()]
 
 # 刪除車位土地的資料
 df = df[~df['交易標的'].isin(['車位', '土地'])]
@@ -74,4 +74,4 @@ city_column = df.pop('鄉鎮市區')
     # 插入'鄉鎮市區'欄位到DataFrame的最前面
 df.insert(0, '鄉鎮市區', city_column)
 df.head()
-df.to_csv(location+'.csv')
+df.to_csv(f'{location}-整理-{str(fromYear)}-{str(toYear)}.csv')
