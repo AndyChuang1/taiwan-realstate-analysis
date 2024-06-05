@@ -166,3 +166,4 @@ crawler/real_estate/**
 .DS_Store
 real_estate
 *merged.csv
+*organize.csv
