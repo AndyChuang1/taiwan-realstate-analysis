@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     '-c', '--city', help="['台北市','苗栗縣','花蓮縣','台中市','台中縣','台東縣','基隆市','南投縣','澎湖縣','台南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','台北縣','嘉義縣','連江縣','宜蘭縣','台南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='台北市')
 parser.add_argument(
-    '-f', '--yearsfrom', help='from year, example"110', type=int, default=111)
+    '-f', '--yearsfrom', help='from year, example"110', type=int, default=112)
 parser.add_argument(
     '-t', '--yearsto', help='to year, example:111', type=int, default=112)
 args = parser.parse_args()
@@ -28,22 +28,29 @@ location_str = """台北市 A 苗栗縣 K 花蓮縣 U
 桃園縣 H 高雄縣 S 新竹市 O
 新竹縣 J 屏東縣 T"""
 
+# 設定基準路徑為專案的根目錄
+basePath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 結合基準路徑和相對路徑來獲取絕對路徑
+
+
+def get_absolute_path(relative_path):
+    return os.path.abspath(os.path.join(basePath, relative_path))
+
+
 # create a dictionary to convert location to letter
 locToLetter = dict(
     zip(location_str.split()[::2], location_str.lower().split()[1::2]))
 
-# for d in os.listdir('crawler/real_estate/') :
-#     if int(d[:3]) >= fromYear and int(d[:3]) <= toYear:
-#         print(d)
-
+sourceDataPath = get_absolute_path('init-data/real_estate')+'/'
 
 # 歷年資料夾
-dirs = [d for d in os.listdir('real_estate/') if not d.startswith('.DS')
+dirs = [d for d in os.listdir(sourceDataPath) if not d.startswith('.DS')
         if int(d[:3]) >= fromYear and int(d[:3]) <= toYear]
 dfs = []
+print(dirs)
 for d in dirs:
     df = pd.read_csv(os.path.join(
-        'real_estate/'+d, locToLetter[location] + '_lvr_land_a.csv'), index_col=False)
+        sourceDataPath+d, locToLetter[location] + '_lvr_land_a.csv'), index_col=False)
     df['Q'] = d[-1]
     dfs.append(df.iloc[1:])
 
@@ -69,9 +76,9 @@ df.index = pd.to_datetime(df['year'].astype(
     str) + df['交易年月日'].str[-4:], errors='coerce')
 df.sort_index(inplace=True)
 
-  # 取出'鄉鎮市區'欄位並將其移除
+# 取出'鄉鎮市區'欄位並將其移除
 city_column = df.pop('鄉鎮市區')
-    # 插入'鄉鎮市區'欄位到DataFrame的最前面
+# 插入'鄉鎮市區'欄位到DataFrame的最前面
 df.insert(0, '鄉鎮市區', city_column)
 df.head()
-df.to_csv(f'{location}-整理-{str(fromYear)}-{str(toYear)}.csv')
+df.to_csv(f'{location}-{str(fromYear)}-{str(toYear)}-merged.csv')

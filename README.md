@@ -4,6 +4,10 @@
 
 `python3.1 crawler/index.py --yearsfrom 102  --yearsto 112`
 
+## Preparation
+
+move real_estate to init-data
+
 ## Analyze the source
 
 `python3.1 analysis/index.py --yearsfrom 102 --yearsto 112 --city 台北市`

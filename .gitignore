@@ -164,5 +164,5 @@ cython_debug/
 crawler/*.zip
 crawler/real_estate/** 
 .DS_Store
-*.csv
 real_estate
+*merged.csv
