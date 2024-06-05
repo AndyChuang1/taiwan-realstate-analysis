@@ -13,8 +13,7 @@ def get_absolute_path(relative_path):
 
 
 filePath = get_absolute_path('init-data/northern-mrt.csv')
-print(filePath)
-print(basePath)
+
 
 # 讀取 CSV 文件
 df = pd.read_csv(filePath)
