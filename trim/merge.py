@@ -4,6 +4,18 @@ import pandas as pd
 import geohash
 import time
 from geopy.distance import geodesic
+import argparse
+
+
+parser = argparse.ArgumentParser(
+    description='Choose the location you want to analyze')
+parser.add_argument(
+    '-c', '--city', help="['台北市','苗栗縣','花蓮縣','台中市','台中縣','台東縣','基隆市','南投縣','澎湖縣','台南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','台北縣','嘉義縣','連江縣','宜蘭縣','台南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='台北市')
+parser.add_argument(
+    '-y', '--year', help='from year, example"110', type=int, default=112)
+args = parser.parse_args()
+location = args.city
+year = args.year
 
 start = time.time()
 
@@ -20,7 +32,12 @@ def get_absolute_path(relative_path):
 
 
 def extract_ri(address):
-    match = re.search(r'(.+里)', address)
+    if pd.isna(address):
+        return None
+    try:
+        match = re.search(r'(.+里)', address)
+    except re.error as e:
+        print(e)
     if match:
         return match.group(1)
     else:
@@ -107,12 +124,12 @@ def findCloseMRT(row, mrt_df):
 
 
 initSourcePath = get_absolute_path('init-data')
-
-address_df = pd.read_csv(initSourcePath+'/台北112_Address_Finish.csv')
+addressPath = f'/{location}{str(year)}_Address_Finish.csv'
+address_df = pd.read_csv(initSourcePath+addressPath)
 address_df['里'] = address_df['Response_Address'].apply(extract_ri)
 
-
-organize_df = pd.read_csv(basePath+'/台北市-112-112-organize.csv')
+organizePath= f'/{location}-{year}-{year}-organize.csv'
+organize_df = pd.read_csv(basePath+organizePath)
 merged_df = pd.concat([organize_df, address_df['里'],
                       address_df['Response_X'], address_df['Response_Y']], axis=1)
 # longitude 經度 latitude 緯度
@@ -125,7 +142,7 @@ merged_df.rename(columns={'Response_X': 'lon',
 merged_df['MRTS'] = merged_df.apply(findCloseMRT, axis=1, mrt_df=mrt_df)
 
 
-merged_df.to_csv(basePath+'/台北市-112-112-merged.csv')
+merged_df.to_csv(basePath+f'/{location}-{year}-{year}-merged.csv')
 end = time.time()
 
 print(end - start)
