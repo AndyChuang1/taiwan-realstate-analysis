@@ -42,7 +42,6 @@ locToLetter = dict(
     zip(location_str.split()[::2], location_str.lower().split()[1::2]))
 
 sourceDataPath = get_absolute_path('init-data/real_estate')+'/'
-
 # 歷年資料夾
 dirs = [d for d in os.listdir(sourceDataPath) if not d.startswith('.DS')
         if int(d[:3]) >= fromYear and int(d[:3]) <= toYear]
@@ -57,7 +56,7 @@ for d in dirs:
 df = pd.concat(dfs, sort=True)
 
 def add_city(address):
-    if not address.startswith('臺北市'):
+    if not address[:3].endswith('市') and not address[:3].endswith('縣'):
         return location + address
     return address
 
