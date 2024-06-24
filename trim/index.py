@@ -8,7 +8,7 @@ from matplotlib.font_manager import FontProperties
 parser = argparse.ArgumentParser(
     description='Choose the location you want to analyze')
 parser.add_argument(
-    '-c', '--city', help="['台北市','苗栗縣','花蓮縣','台中市','台中縣','台東縣','基隆市','南投縣','澎湖縣','台南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','台北縣','嘉義縣','連江縣','宜蘭縣','台南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='台北市')
+    '-c', '--city', help="['臺北市','苗栗縣','花蓮縣','臺中市','臺中縣','臺東縣','基隆市','南投縣','澎湖縣','臺南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','臺北縣','嘉義縣','連江縣','宜蘭縣','臺南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='臺北市')
 parser.add_argument(
     '-f', '--yearsfrom', help='from year, example"110', type=int, default=112)
 parser.add_argument(
@@ -18,13 +18,13 @@ location = args.city
 fromYear = args.yearsfrom
 toYear = args.yearsto
 
-location_str = """台北市 A 苗栗縣 K 花蓮縣 U
-台中市 B 台中縣 L 台東縣 V
+location_str = """臺北市 A 苗栗縣 K 花蓮縣 U
+臺中市 B 臺中縣 L 臺東縣 V
 基隆市 C 南投縣 M 澎湖縣 X
-台南市 D 彰化縣 N 陽明山 Y
+臺南市 D 彰化縣 N 陽明山 Y
 高雄市 E 雲林縣 P 金門縣 W
 新北市 F 嘉義縣 Q 連江縣 Z
-宜蘭縣 G 台南縣 R 嘉義市 I
+宜蘭縣 G 臺南縣 R 嘉義市 I
 桃園縣 H 高雄縣 S 新竹市 O
 新竹縣 J 屏東縣 T"""
 
@@ -42,7 +42,6 @@ locToLetter = dict(
     zip(location_str.split()[::2], location_str.lower().split()[1::2]))
 
 sourceDataPath = get_absolute_path('init-data/real_estate')+'/'
-
 # 歷年資料夾
 dirs = [d for d in os.listdir(sourceDataPath) if not d.startswith('.DS')
         if int(d[:3]) >= fromYear and int(d[:3]) <= toYear]
@@ -55,6 +54,14 @@ for d in dirs:
     dfs.append(df.iloc[1:])
 
 df = pd.concat(dfs, sort=True)
+
+def add_city(address):
+    if not address[:3].endswith('市') and not address[:3].endswith('縣'):
+        return location + address
+    return address
+
+# 應用函數到地址欄位
+df['土地位置建物門牌'] = df['土地位置建物門牌'].apply(add_city)
 
 # 新增交易年份
 df['year'] = pd.to_numeric(df['交易年月日'].str[:-4], errors='coerce') + 1911

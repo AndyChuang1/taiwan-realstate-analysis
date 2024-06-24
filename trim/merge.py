@@ -10,7 +10,7 @@ import argparse
 parser = argparse.ArgumentParser(
     description='Choose the location you want to analyze')
 parser.add_argument(
-    '-c', '--city', help="['台北市','苗栗縣','花蓮縣','台中市','台中縣','台東縣','基隆市','南投縣','澎湖縣','台南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','台北縣','嘉義縣','連江縣','宜蘭縣','台南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='台北市')
+    '-c', '--city', help="['臺北市','苗栗縣','花蓮縣','臺中市','臺中縣','臺東縣','基隆市','南投縣','澎湖縣','臺南市','彰化縣','陽明山','高雄市','雲林縣','金門縣','臺北縣','嘉義縣','連江縣','宜蘭縣','臺南縣','嘉義市','桃園縣','高雄縣','新竹市','新竹縣','屏東縣']", default='臺北市')
 parser.add_argument(
     '-y', '--year', help='from year, example"110', type=int, default=112)
 args = parser.parse_args()
