@@ -8,9 +8,15 @@ parser.add_argument(
     '-m', '--merge', help='Its merge action', type=bool, default=False)
 parser.add_argument(
     '-f', '--filename', help='台北市102-102_updated_address.csv', type=str, default='台北市102-102_updated_address.csv')
+parser.add_argument(
+    '-c', '--city', help='臺北市', type=str, default='臺北市')
+parser.add_argument(
+    '-y', '--year', help='112', type=str, default='112')
 args = parser.parse_args()
 isMerge = args.merge
 fileName = args.filename
+city = args.city
+year = args.year
 
 
 
@@ -38,4 +44,4 @@ else:
     merged_data = pd.concat([csv1, csv2], ignore_index=True)
 
     # 將合併後的資料存回 CSV
-    merged_data.to_csv('merged_data102.csv', index=False)
+    merged_data.to_csv(f'{city}{year}_Address_finish.csv', index=False)

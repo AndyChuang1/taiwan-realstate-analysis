@@ -27,8 +27,9 @@ move real_estate to init-data
 1. `python3.1 trim/index.py -f 110 -t 110  -c 臺北市`
 2. `python3.1 trim/convert-to-tgos.py -f 110 -t 110  -c 臺北市`
 3.  Upload 臺北縣110-110_updated_address to https://www.tgos.tw/tgos/Addr
-    - if records of 臺北縣110-110_updated_address are more than 10000, split to 2 part is necessary. `python3.1 split-merge-address.py -f 臺北市110-110_updated_address.csv`
+    - if records of 臺北縣110-110_updated_address are more than 10000, split to 2 part is necessary. `python3.1 split-merge-address.py -f 臺北市110-110_updated_address.csv -c 臺北市 -y 110`
     - TGOS only supports 10000 records per day
 4.  把Tgos回傳的檔案放到 程式資料夾的 init-data 並重新命名 臺北市110_Address_Finish
+    -  if response of TGOS is two part, merge to one part is necessary. `python3.1 split-merge-address.py -f 臺北市-110-110.csv -c 臺北市 -y 105 -m true`
 5. `python3.1 trim/merge.py -y 110 -c 臺北市` 合併TGOS經緯度跟抓出捷運站距離
 
