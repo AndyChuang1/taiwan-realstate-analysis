@@ -38,5 +38,12 @@ if '土地位置建物門牌' in organize_df.columns:
     address_df['Address'] = organize_df['土地位置建物門牌'].values
 
 address_df['id'] = range(1, len(address_df) + 1)
-# 保存更新後的 address_df 到新的 CSV 文件
-address_df.to_csv(location+str(fromYear)+'-'+str(toYear)+'_'+'updated_address.csv', index=False)
+chunk_size = 10000
+if len(address_df)>10000:
+    # 計算需要多少個 CSV 檔案
+    num_chunks = (len(address_df) // chunk_size) + 1 
+
+    for i in range(num_chunks):
+        # 切分 DataFrame 並存入 CSV
+        chunk = address_df.iloc[i * chunk_size: (i + 1) * chunk_size]
+        chunk.to_csv(location+str(fromYear)+'-'+str(toYear)+'_'+'address.csv', index=False)
