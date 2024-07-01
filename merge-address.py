@@ -46,7 +46,7 @@ year = args.year
 #     merged_data.to_csv(f'{city}{year}_Address_finish.csv', index=False)
 
 # 列出當前目錄下所有以 'p' 開頭且以 '_address.csv' 結尾的檔案
-csv_files = [f for f in os.listdir('.') if f.startswith('p') and f'{city}' in f and f'{year}' in f and f.endswith('_address.csv')]
+csv_files = [f for f in os.listdir('.') if f.startswith('p') and f'{city}' in f and f'{year}' in f and f.endswith('_finish.csv')]
 
 # 用來存放所有讀入的 DataFrame 的列表
 dataframes = []
