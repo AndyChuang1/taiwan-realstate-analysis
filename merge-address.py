@@ -50,7 +50,8 @@ csv_files = [f for f in os.listdir('.') if f.startswith('p') and f'{city}' in f 
 
 # 用來存放所有讀入的 DataFrame 的列表
 dataframes = []
-
+csv_files.sort()
+print(csv_files)
 # 讀取每個 CSV 檔案並加入列表
 for file in csv_files:
     df = pd.read_csv(file)
