@@ -49,5 +49,6 @@ df['MRTS'] = df['MRTS'].apply(toList)
 df['mrt_count'] = df['MRTS'].apply(len)
 df['closest_mrt_meters'] = df['MRTS'].apply(findClosest)
 df['house_age'] = df['建築完成年月'].apply(toHouseAge)
+df['里']= df['里'].str.split(';').str[-1]
 
 df.to_csv(fileName+finalStr, index=False)
