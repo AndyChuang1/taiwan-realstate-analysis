@@ -33,3 +33,32 @@ move real_estate to init-data
     -  if response of TGOS is multi part, merge to one part is necessary. rename TGOS file to p1-臺北市111-111_address_finish, p2-新北市111-111_address_finish `python3.1 merge-address.py -c 臺北市 -y 111`
 5. `python3.1 trim/merge.py -y 110 -c 臺北市` 合併TGOS經緯度跟抓出捷運站距離
 
+
+## Final organization
+Input Data
+
+The script requires the following CSV files:
+
+`taipei-park-count.csv`: Contains park counts per district (里)
+
+`taipei-gas-station-count.csv`: Contains gas station counts per district (里)
+
+`<city>-<year>-<year>-merged.csv`: The main dataset containing real estate information.
+
+### Usage
+
+Run the script with the following command:
+
+`python script.py -c <city> -y <year>`
+
+Parameters:
+
+`-c or --city: Specify the city name (e.g., 臺北市 or 新北市). Defaults to 臺北市.`
+
+`-y or --year: Specify the dataset year (e.g., 112). Defaults to 112.`
+
+Example Execution:
+
+`python script.py -c 臺北市 -y 112`
+
+This will process the file 臺北市-112-112-merged.csv and generate an output file named 臺北市-112-112-merged-final.csv.
